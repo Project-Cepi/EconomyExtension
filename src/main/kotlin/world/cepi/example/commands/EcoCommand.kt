@@ -7,12 +7,12 @@ import net.minestom.server.command.builder.CommandExecutor
 import net.minestom.server.command.builder.arguments.Argument
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
+import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
-
 
 class EcoCommand : Command("eco") {
     init {
-        val amount = ArgumentType.Integer("amount")
+        val amount = ArgumentType.Integer("amount").max(1).min(64)
         val moneyType = ArgumentType.Word("type").from("crowns", "shards")
         setCondition { sender, _ ->
             if (!sender.isPlayer) {
@@ -20,15 +20,11 @@ class EcoCommand : Command("eco") {
                 return@setCondition false
             } else return@setCondition true
         }
-        addSyntax({ commandSender: CommandExecutor, args: Arguments ->
 
-            val player = commandSender as Player
-
-            player.inventory.addItemStack(args.getItemStack(Material.HONEYCOMB.toString()))
-
-        }, moneyType)
-
-
+        addSyntax({ sender: CommandSender, args: Arguments ->
+            val player = sender as Player
+            player.inventory.addItemStack(ItemStack(Material.HONEYCOMB, args.getInteger("amount").toByte()))
+        }
+        )
     }
-
 }
