@@ -15,7 +15,7 @@ class EcoCommand : Command("eco") {
 //add permission later
     init {
         setDefaultExecutor {sender, _ ->
-            sender.sendMessage("Usage: /eco <player> <crowns|shards> <amount>")
+            sender.sendMessage("Usage: /eco <give|take> <player> <crowns|shards> <amount>")
         }
 
 
@@ -44,7 +44,7 @@ class EcoCommand : Command("eco") {
             } else if (args.getWord("action") == "take") {
                 player.sendMessage("${ChatColor.GRAY} [${ChatColor.RED}+${ChatColor.GRAY}]${ChatColor.DARK_GRAY} This is not implemented yet")
             }
-        },targ, actionn, moneyType, amount)
+        }, actionn, targ, moneyType, amount)
 
     }
 }
