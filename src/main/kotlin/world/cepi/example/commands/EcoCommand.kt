@@ -14,7 +14,7 @@ class EcoCommand : Command("eco") {
     }
 //add permission later
     init {
-        setDefaultExecutor {sender, _ ->
+        setDefaultExecutor { sender, _ ->
             sender.sendMessage("Usage: /eco <give|take> <player> <crowns|shards> <amount>")
         }
 
@@ -24,25 +24,49 @@ class EcoCommand : Command("eco") {
         val targ = ArgumentType.Word("player")
         val actionn = ArgumentType.Word("action").from("give", "take")
 
-        addSyntax({sender, args ->
+        addSyntax({ sender, args ->
             val player = sender as Player
-            if (args.getWord("action") == "give"){
+            if (args.getWord("action") == "give") {
                 if (args.getWord("type") == "crowns") {
                     getP(args.getWord("player"))?.inventory?.addItemStack(ItemStack(Material.HONEYCOMB, args.getInteger("amount").toByte()))
                     player.sendMessage("${ChatColor.GRAY} [${ChatColor.BRIGHT_GREEN}+${ChatColor.GRAY}]${ChatColor.DARK_GRAY} Gave ${args.getInteger("amount")} Crowns to ${args.getWord("player")}")
-                    if (getP(args.getWord("player"))!== player ) {
+                    if (getP(args.getWord("player")) !== player) {
                         getP(args.getWord("player"))?.sendMessage("${ChatColor.GRAY} [${ChatColor.BRIGHT_GREEN}+${ChatColor.GRAY}]${ChatColor.DARK_GRAY} You were given ${args.getInteger("amount")} Crowns by $player")
 
                     }
                 } else if (args.getWord("type") == "shards") {
                     getP(args.getWord("player"))?.inventory?.addItemStack(ItemStack(Material.PRISMARINE_SHARD, args.getInteger("amount").toByte()))
                     player.sendMessage("${ChatColor.GRAY} [${ChatColor.BRIGHT_GREEN}+${ChatColor.GRAY}]${ChatColor.DARK_GRAY} Gave ${args.getInteger("amount")} Shards to ${args.getWord("player")}")
-                    if (getP(args.getWord("player"))!== player ) {
+                    if (getP(args.getWord("player")) !== player) {
                         getP(args.getWord("player"))?.sendMessage("${ChatColor.GRAY} [${ChatColor.BRIGHT_GREEN}+${ChatColor.GRAY}]${ChatColor.DARK_GRAY} You were given ${args.getInteger("amount")} Shards by $player")
                     }
                 }
             } else if (args.getWord("action") == "take") {
-                player.sendMessage("${ChatColor.GRAY} [${ChatColor.RED}+${ChatColor.GRAY}]${ChatColor.DARK_GRAY} This is not implemented yet")
+                if (args.getWord("type") == "crowns") {
+
+
+                    for (i in 0 until player.inventory.getSize()) {
+                        val loopItem: ItemStack = player.inventory.getItemStack(i)
+                        if (loopItem.getMaterial().equals(Material.HONEYCOMB)) {
+                            val newItem = loopItem.consume(args.getInteger("amount"))
+                            if (newItem !== null) {
+                                player.inventory.setItemStack(i, newItem)
+                                break
+                            }
+                        }
+                    }
+                } else if (args.getWord("type") == "shards") {
+                    for (i in 0 until player.inventory.getSize()) {
+                        val loopItem: ItemStack = player.inventory.getItemStack(i)
+                        if (loopItem.getMaterial().equals(Material.PRISMARINE_SHARD)) {
+                            val newItem = loopItem.consume(args.getInteger("amount"))
+                            if (newItem !== null) {
+                                player.inventory.setItemStack(i, newItem)
+                                break
+                            }
+                        }
+                    }
+                }
             }
         }, actionn, targ, moneyType, amount)
 
