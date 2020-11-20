@@ -42,6 +42,7 @@ class EcoCommand : Command("eco") {
                     }
                 }
             } else if (args.getWord("action") == "take") {
+
                 if (args.getWord("type") == "crowns") {
 
 
@@ -49,6 +50,7 @@ class EcoCommand : Command("eco") {
                         val loopItem: ItemStack = player.inventory.getItemStack(i)
                         if (loopItem.getMaterial().equals(Material.HONEYCOMB)) {
                             val newItem = loopItem.consume(args.getInteger("amount"))
+                            player.sendMessage("${ChatColor.GRAY} [${ChatColor.BRIGHT_GREEN}+${ChatColor.GRAY}]${ChatColor.DARK_GRAY} removed ${args.getInteger("amount")} Crowns from ${args.getWord("player")}")
                             if (newItem !== null) {
                                 player.inventory.setItemStack(i, newItem)
                                 break
@@ -60,6 +62,7 @@ class EcoCommand : Command("eco") {
                         val loopItem: ItemStack = player.inventory.getItemStack(i)
                         if (loopItem.getMaterial().equals(Material.PRISMARINE_SHARD)) {
                             val newItem = loopItem.consume(args.getInteger("amount"))
+                            player.sendMessage("${ChatColor.GRAY} [${ChatColor.BRIGHT_GREEN}+${ChatColor.GRAY}]${ChatColor.DARK_GRAY} removed ${args.getInteger("amount")} Shards from ${args.getWord("player")}")
                             if (newItem !== null) {
                                 player.inventory.setItemStack(i, newItem)
                                 break
