@@ -1,6 +1,10 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin.
-    id("org.jetbrains.kotlin.jvm") version "1.4.10"
+    id("org.jetbrains.kotlin.jvm") version "1.4.21"
+    kotlin("plugin.serialization") version "1.4.20"
+    maven
 
     // Apply the application plugin to add support for building a jar
     java
@@ -28,20 +32,14 @@ dependencies {
     // Use the Kotlin reflect library.
     implementation(kotlin("reflect"))
 
-    // Use the JUpiter test library.
-    testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
-
     // Compile Minestom into project
-    implementation("com.github.Minestom:Minestom:2405b7a")
+    implementation("com.github.Minestom:Minestom:dad642a6a2")
 
-    // Use the Netty library
-    implementation("io.netty:netty-transport-native-epoll:4.1.52.Final")
+    // Get KStom
+    implementation("com.github.Project-Cepi:KStom:aace4fedfe")
 
-    // KHTTP
-    implementation("khttp:khttp:1.0.0")
-
-    // Implement Klaxon
-    implementation("com.beust:klaxon:5.0.1")
+    // import kotlinx serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
 }
 
 tasks.withType<Test> {
@@ -51,4 +49,8 @@ tasks.withType<Test> {
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "11"
 }

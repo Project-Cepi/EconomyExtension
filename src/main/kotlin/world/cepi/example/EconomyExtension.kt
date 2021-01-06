@@ -4,15 +4,15 @@ import net.minestom.server.MinecraftServer
 import net.minestom.server.extensions.Extension;
 import world.cepi.example.commands.EcoCommand
 
-class ExampleExtension : Extension() {
+class EconomyExtension : Extension() {
 
     override fun initialize() {
-        logger.info("[ExampleExtension] has been enabled!")
         MinecraftServer.getCommandManager().register(EcoCommand())
+        logger.info("[EconomyExtension] has been enabled!")
     }
 
     override fun terminate() {
-        logger.info("[ExampleExtension] has been disabled!")
+        logger.info("[EconomyExtension] has been disabled!")
     }
 
 }
