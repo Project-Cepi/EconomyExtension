@@ -1,4 +1,4 @@
-package world.cepi.example.commands
+package world.cepi.economy.commands
 
 import net.minestom.server.MinecraftServer
 import net.minestom.server.command.builder.Command

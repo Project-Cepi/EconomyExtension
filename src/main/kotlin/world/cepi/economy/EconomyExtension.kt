@@ -1,8 +1,8 @@
-package world.cepi.example
+package world.cepi.economy
 
 import net.minestom.server.MinecraftServer
 import net.minestom.server.extensions.Extension;
-import world.cepi.example.commands.EcoCommand
+import world.cepi.economy.commands.EcoCommand
 
 class EconomyExtension : Extension() {
 
