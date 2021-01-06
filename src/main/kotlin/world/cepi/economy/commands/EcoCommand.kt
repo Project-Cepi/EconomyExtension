@@ -28,7 +28,7 @@ class EcoCommand : Command("eco") {
         val playerArgument = ArgumentType.DynamicWord("player").fromRestrictions { name -> MinecraftServer.getConnectionManager().onlinePlayers.any { it.username.equals(name, true) } }
 
         addSyntax(info, playerArgument) { sender, args ->
-            sender.sendMessage("Amount: ${map.getOrDefault(getP(args.get(playerArgument)), 0)})")
+            sender.sendMessage("Amount: ${map.getOrDefault(getP(args.get(playerArgument)), 0)}")
         }
 
         addSyntax(set, playerArgument, amount) { sender, args ->
