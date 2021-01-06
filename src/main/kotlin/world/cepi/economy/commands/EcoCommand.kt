@@ -10,7 +10,7 @@ import world.cepi.kstom.arguments.asSubcommand
 class EcoCommand : Command("eco") {
 
     companion object {
-        val map: MutableMap<Player, Int> = mutableMapOf()
+        val economy: MutableMap<Player, Int> = mutableMapOf()
     }
 
     fun getP(name: String): Player? {
@@ -28,7 +28,7 @@ class EcoCommand : Command("eco") {
         val playerArgument = ArgumentType.DynamicWord("player").fromRestrictions { name -> MinecraftServer.getConnectionManager().onlinePlayers.any { it.username.equals(name, true) } }
 
         addSyntax(info, playerArgument) { sender, args ->
-            sender.sendMessage("Amount: ${map.getOrDefault(getP(args.get(playerArgument)), 0)}")
+            sender.sendMessage("Amount: ${economy.getOrDefault(getP(args.get(playerArgument)), 0)}")
         }
 
         addSyntax(set, playerArgument, amount) { sender, args ->
@@ -39,7 +39,7 @@ class EcoCommand : Command("eco") {
                 return@addSyntax
             }
 
-            map[player] = args.get(amount)
+            economy[player] = args.get(amount)
         }
 
         addSyntax(remove, playerArgument, amount) { sender, args ->
@@ -52,7 +52,7 @@ class EcoCommand : Command("eco") {
 
             playerCheck(player)
 
-            map[player] = map[player]!!.minus(args.get(amount))
+            economy[player] = economy[player]!!.minus(args.get(amount))
         }
 
         addSyntax(add, playerArgument, amount) { sender, args ->
@@ -65,13 +65,13 @@ class EcoCommand : Command("eco") {
 
             playerCheck(player)
 
-            map[player] = map[player]!!.plus(args.get(amount))
+            economy[player] = economy[player]!!.plus(args.get(amount))
         }
 
 
     }
 
     fun playerCheck(player: Player) {
-        if (map[player] == null) map[player] = 0
+        if (economy[player] == null) economy[player] = 0
     }
 }
