@@ -36,7 +36,7 @@ dependencies {
     implementation("com.github.Minestom:Minestom:dad642a6a2")
 
     // Get KStom
-    implementation("com.github.Project-Cepi:KStom:aace4fedfe")
+    implementation("com.github.Project-Cepi:KStom:6e996d24c4")
 
     // import kotlinx serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")

@@ -4,8 +4,8 @@ import net.minestom.server.MinecraftServer
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
-import world.cepi.kstom.addSyntax
-import world.cepi.kstom.arguments.asSubcommand
+import world.cepi.kstom.command.addSyntax
+import world.cepi.kstom.command.arguments.asSubcommand
 
 class EcoCommand : Command("eco") {
 
