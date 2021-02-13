@@ -33,10 +33,10 @@ dependencies {
     implementation(kotlin("reflect"))
 
     // Compile Minestom into project
-    implementation("com.github.Minestom:Minestom:dad642a6a2")
+    implementation("com.github.Minestom:Minestom:df2ee23a7c")
 
     // Get KStom
-    implementation("com.github.Project-Cepi:KStom:6e996d24c4")
+    implementation("com.github.Project-Cepi:KStom:3b80924771")
 
     // import kotlinx serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
