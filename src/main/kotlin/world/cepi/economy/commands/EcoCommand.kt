@@ -28,7 +28,7 @@ class EcoCommand : Command("eco") {
         val playerArgument = ArgumentType.Entity("player").onlyPlayers(true).singleEntity(true)
 
         addSyntax(info, playerArgument) { sender, args ->
-            sender.sendFormattedMessage(ecoAmount, Component.text(economy.getInt(args.get(playerArgument).find(sender)), NamedTextColor.BLUE))
+            sender.sendFormattedMessage(ecoAmount, Component.text(economy.getInt(args.get(playerArgument).find(sender)[0]), NamedTextColor.BLUE))
         }
 
         addSyntax(set, playerArgument, amount) { sender, args ->
@@ -41,6 +41,12 @@ class EcoCommand : Command("eco") {
             }
 
             economy[player] = args.get(amount)
+
+            sender.sendFormattedMessage(
+                ecoSetAmount,
+                Component.text(args.get(amount), NamedTextColor.BLUE),
+                Component.text(player.username, NamedTextColor.BLUE)
+            )
         }
 
         addSyntax(remove, playerArgument, amount) { sender, args ->
@@ -52,7 +58,13 @@ class EcoCommand : Command("eco") {
                 return@addSyntax
             }
 
-            economy[player] = economy.getInt(player).minus(args.get(amount))
+            economy[player] = economy.getInt(player) - args.get(amount)
+
+            sender.sendFormattedMessage(
+                ecoRemoveAmount,
+                Component.text(args.get(amount), NamedTextColor.BLUE),
+                Component.text(player.username, NamedTextColor.BLUE)
+            )
         }
 
         addSyntax(add, playerArgument, amount) { sender, args ->
@@ -64,7 +76,13 @@ class EcoCommand : Command("eco") {
                 return@addSyntax
             }
 
-            economy[player] = economy.getInt(player).plus(args.get(amount))
+            economy[player] = economy.getInt(player) + args.get(amount)
+
+            sender.sendFormattedMessage(
+                ecoAddAmount,
+                Component.text(args.get(amount), NamedTextColor.BLUE),
+                Component.text(player.username, NamedTextColor.BLUE)
+            )
         }
 
 
