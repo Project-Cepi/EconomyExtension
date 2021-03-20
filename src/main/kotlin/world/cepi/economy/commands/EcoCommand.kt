@@ -1,20 +1,20 @@
 package world.cepi.economy.commands
 
-import net.minestom.server.MinecraftServer
+import it.unimi.dsi.fastutil.objects.Object2IntMap
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
+import world.cepi.kepi.messages.sendFormattedMessage
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.asSubcommand
 
 class EcoCommand : Command("eco") {
 
     companion object {
-        val economy: MutableMap<Player, Int> = mutableMapOf()
-    }
-
-    fun getP(name: String): Player? {
-        return MinecraftServer.getConnectionManager().onlinePlayers.firstOrNull { it.username.equals(name, true) }
+        val economy: Object2IntMap<Player> = Object2IntOpenHashMap()
     }
 
     init {
@@ -25,17 +25,18 @@ class EcoCommand : Command("eco") {
         val remove = "remove".asSubcommand()
 
         val amount = ArgumentType.Integer("amount")
-        val playerArgument = ArgumentType.DynamicWord("player").fromRestrictions { name -> MinecraftServer.getConnectionManager().onlinePlayers.any { it.username.equals(name, true) } }
+        val playerArgument = ArgumentType.Entity("player").onlyPlayers(true).singleEntity(true)
 
         addSyntax(info, playerArgument) { sender, args ->
-            sender.sendMessage("Amount: ${economy.getOrDefault(getP(args.get(playerArgument)), 0)}")
+            sender.sendFormattedMessage(ecoAmount, Component.text(economy.getInt(args.get(playerArgument).find(sender)), NamedTextColor.BLUE))
         }
 
         addSyntax(set, playerArgument, amount) { sender, args ->
 
-            val player = getP(args.get(playerArgument))
+            val player = args.get(playerArgument).find(sender)[0] as? Player
+
             if (player == null) {
-                sender.sendMessage("That player does not exist!")
+                sender.sendFormattedMessage(ecoPlayerNotExist)
                 return@addSyntax
             }
 
@@ -44,34 +45,28 @@ class EcoCommand : Command("eco") {
 
         addSyntax(remove, playerArgument, amount) { sender, args ->
 
-            val player = getP(args.get(playerArgument))
+            val player = args.get(playerArgument).find(sender)[0] as? Player
+
             if (player == null) {
-                sender.sendMessage("That player does not exist!")
+                sender.sendFormattedMessage(ecoPlayerNotExist)
                 return@addSyntax
             }
 
-            playerCheck(player)
-
-            economy[player] = economy[player]!!.minus(args.get(amount))
+            economy[player] = economy.getInt(player).minus(args.get(amount))
         }
 
         addSyntax(add, playerArgument, amount) { sender, args ->
 
-            val player = getP(args.get(playerArgument))
+            val player = args.get(playerArgument).find(sender)[0] as? Player
+            
             if (player == null) {
-                sender.sendMessage("That player does not exist!")
+                sender.sendFormattedMessage(ecoPlayerNotExist)
                 return@addSyntax
             }
 
-            playerCheck(player)
-
-            economy[player] = economy[player]!!.plus(args.get(amount))
+            economy[player] = economy.getInt(player).plus(args.get(amount))
         }
 
 
-    }
-
-    fun playerCheck(player: Player) {
-        if (economy[player] == null) economy[player] = 0
     }
 }

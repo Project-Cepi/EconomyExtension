@@ -2,8 +2,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin.
-    id("org.jetbrains.kotlin.jvm") version "1.4.31"
-    kotlin("plugin.serialization") version "1.4.20"
+    kotlin("jvm") version "1.4.31"
+    id("com.github.johnrengelman.shadow") version "6.1.0"
+    id("org.jetbrains.dokka") version "1.4.20"
+    kotlin("plugin.serialization") version "1.4.21"
+    `maven-publish`
+
     maven
 
     // Apply the application plugin to add support for building a jar
@@ -13,37 +17,61 @@ plugins {
 repositories {
     // Use jcenter for resolving dependencies.
     jcenter()
-
+    mavenCentral()
     // Use mavenCentral
     maven(url = "https://repo1.maven.org/maven2/")
     maven(url = "https://repo.spongepowered.org/maven")
     maven(url = "https://libraries.minecraft.net")
     maven(url = "https://jitpack.io")
     maven(url = "https://jcenter.bintray.com/")
+    maven(url = "https://oss.sonatype.org/content/repositories/snapshots/")
 }
 
 dependencies {
     // Align versions of all Kotlin components
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
+    compileOnly(platform("org.jetbrains.kotlin:kotlin-bom"))
 
     // Use the Kotlin JDK 8 standard library.
-    implementation(kotlin("stdlib"))
+    compileOnly(kotlin("stdlib"))
 
     // Use the Kotlin reflect library.
-    implementation(kotlin("reflect"))
+    compileOnly(kotlin("reflect"))
 
     // Compile Minestom into project
-    implementation("com.github.Minestom:Minestom:df2ee23a7c")
+    compileOnly("com.github.Project-Cepi:Minestom:60a03a9c8e")
 
     // Get KStom
-    implementation("com.github.Project-Cepi:KStom:3b80924771")
+    compileOnly("com.github.Project-Cepi:KStom:cbcf67f09c")
 
     // import kotlinx serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
+    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
+
+    // Add Kepi
+    compileOnly("com.github.Project-Cepi:Kepi:98950d8431")
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+configurations {
+    testImplementation {
+        extendsFrom(configurations.compileOnly.get())
+    }
+}
+
+tasks {
+    named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+        archiveBaseName.set("economy")
+        mergeServiceFiles()
+        minimize()
+
+    }
+
+    test { useJUnitPlatform() }
+
+    build { dependsOn(shadowJar) }
+
 }
 
 java {
@@ -51,6 +79,9 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+tasks.withType<KotlinCompile> { kotlinOptions.jvmTarget = "11" }
+val compileKotlin: KotlinCompile by tasks
+
+compileKotlin.kotlinOptions {
+    freeCompilerArgs = listOf("-Xinline-classes")
 }
