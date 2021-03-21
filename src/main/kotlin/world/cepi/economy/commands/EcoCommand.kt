@@ -8,6 +8,7 @@ import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
 import world.cepi.kepi.messages.sendFormattedMessage
+import world.cepi.kepi.subcommands.Help
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.asSubcommand
 
@@ -85,6 +86,19 @@ class EcoCommand : Command("eco") {
             )
         }
 
+        addSubcommand(Help(
+            Component.text("The economy command is a supertool"),
+            Component.text("to manage the money of users."),
+            Component.space(),
+            Component.text("There are four actions: info, ").append(Component.text("set, add, and remove.", NamedTextColor.BLUE)),
+            Component.text("Set, add, and remove take"),
+            Component.text("2 paramaters: ").append(Component.text("<player: selector> and [<amount: number>]", NamedTextColor.BLUE)),
+            Component.text("Example: ").append(Component.text("/eco add User 5", NamedTextColor.YELLOW)),
+            Component.space(),
+            Component.text("The info action allows you to get the money of a user."),
+            Component.text("Example: ").append(Component.text("/eco info User", NamedTextColor.YELLOW)),
+            Component.text("The example will return the amount of money they have.")
+        ))
 
     }
 }
