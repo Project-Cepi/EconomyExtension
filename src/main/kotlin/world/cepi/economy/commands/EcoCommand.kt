@@ -1,22 +1,20 @@
 package world.cepi.economy.commands
 
-import it.unimi.dsi.fastutil.objects.Object2IntMap
-import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
+import it.unimi.dsi.fastutil.objects.Object2LongMap
+import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
-import world.cepi.kepi.messages.sendFormattedMessage
+import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kepi.subcommands.Help
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.asSubcommand
 
-class EcoCommand : Command("eco") {
+object EcoCommand : Command("eco") {
 
-    companion object {
-        val economy: Object2IntMap<Player> = Object2IntOpenHashMap()
-    }
+    val economy: Object2LongMap<Player> = Object2LongOpenHashMap()
 
     init {
 
@@ -29,7 +27,9 @@ class EcoCommand : Command("eco") {
         val playerArgument = ArgumentType.Entity("player").onlyPlayers(true).singleEntity(true)
 
         addSyntax(info, playerArgument) { sender, args ->
-            sender.sendFormattedMessage(ecoAmount, Component.text(economy.getInt(args.get(playerArgument).find(sender)[0]), NamedTextColor.BLUE))
+            sender.sendFormattedTranslatableMessage("economy", "amount",
+                Component.text(economy.getLong(args.get(playerArgument).find(sender)[0]), NamedTextColor.BLUE)
+            )
         }
 
         addSyntax(set, playerArgument, amount) { sender, args ->
@@ -37,14 +37,14 @@ class EcoCommand : Command("eco") {
             val player = args.get(playerArgument).find(sender)[0] as? Player
 
             if (player == null) {
-                sender.sendFormattedMessage(ecoPlayerNotExist)
+                sender.sendFormattedTranslatableMessage("common", "target.not_found")
                 return@addSyntax
             }
 
-            economy[player] = args.get(amount)
+            economy[player] = args.get(amount).toLong()
 
-            sender.sendFormattedMessage(
-                ecoSetAmount,
+            sender.sendFormattedTranslatableMessage(
+                "economy", "set",
                 Component.text(args.get(amount), NamedTextColor.BLUE),
                 Component.text(player.username, NamedTextColor.BLUE)
             )
@@ -55,14 +55,14 @@ class EcoCommand : Command("eco") {
             val player = args.get(playerArgument).find(sender)[0] as? Player
 
             if (player == null) {
-                sender.sendFormattedMessage(ecoPlayerNotExist)
+                sender.sendFormattedTranslatableMessage("common", "target.not_found")
                 return@addSyntax
             }
 
-            economy[player] = economy.getInt(player) - args.get(amount)
+            economy[player] = economy.getLong(player) - args.get(amount)
 
-            sender.sendFormattedMessage(
-                ecoRemoveAmount,
+            sender.sendFormattedTranslatableMessage(
+                "economy", "remove",
                 Component.text(args.get(amount), NamedTextColor.BLUE),
                 Component.text(player.username, NamedTextColor.BLUE)
             )
@@ -73,14 +73,14 @@ class EcoCommand : Command("eco") {
             val player = args.get(playerArgument).find(sender)[0] as? Player
             
             if (player == null) {
-                sender.sendFormattedMessage(ecoPlayerNotExist)
+                sender.sendFormattedTranslatableMessage("common", "target.not_found")
                 return@addSyntax
             }
 
-            economy[player] = economy.getInt(player) + args.get(amount)
+            economy[player] = economy.getLong(player) + args.get(amount)
 
-            sender.sendFormattedMessage(
-                ecoAddAmount,
+            sender.sendFormattedTranslatableMessage(
+                "economy", "add",
                 Component.text(args.get(amount), NamedTextColor.BLUE),
                 Component.text(player.username, NamedTextColor.BLUE)
             )

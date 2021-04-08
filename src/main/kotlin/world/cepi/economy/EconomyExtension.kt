@@ -7,11 +7,12 @@ import world.cepi.economy.commands.EcoCommand
 class EconomyExtension : Extension() {
 
     override fun initialize() {
-        MinecraftServer.getCommandManager().register(EcoCommand())
+        MinecraftServer.getCommandManager().register(EcoCommand)
         logger.info("[EconomyExtension] has been enabled!")
     }
 
     override fun terminate() {
+        MinecraftServer.getCommandManager().unregister(EcoCommand)
         logger.info("[EconomyExtension] has been disabled!")
     }
 
