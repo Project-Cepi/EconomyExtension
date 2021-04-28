@@ -1,20 +1,18 @@
 package world.cepi.economy.commands
 
-import it.unimi.dsi.fastutil.objects.Object2LongMap
-import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
+import net.minestom.server.MinecraftServer
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
+import world.cepi.economy.EconomyHandler
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kepi.subcommands.Help
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.asSubcommand
 
-object EcoCommand : Command("eco") {
-
-    val economy: Object2LongMap<Player> = Object2LongOpenHashMap()
+internal object EconomyCommand : Command("eco") {
 
     init {
 
@@ -28,7 +26,11 @@ object EcoCommand : Command("eco") {
 
         addSyntax(info, playerArgument) { sender, args ->
             sender.sendFormattedTranslatableMessage("economy", "amount",
-                Component.text(economy.getLong(args.get(playerArgument).find(sender)[0]), NamedTextColor.BLUE)
+                Component.text(EconomyHandler[
+                        MinecraftServer
+                            .getConnectionManager()
+                            .getPlayer(args.get(playerArgument).find(sender)[0].uuid)!!
+                                             ], NamedTextColor.BLUE)
             )
         }
 
@@ -41,7 +43,7 @@ object EcoCommand : Command("eco") {
                 return@addSyntax
             }
 
-            economy[player] = args.get(amount).toLong()
+            EconomyHandler[player] = args.get(amount).toLong()
 
             sender.sendFormattedTranslatableMessage(
                 "economy", "set",
@@ -59,7 +61,7 @@ object EcoCommand : Command("eco") {
                 return@addSyntax
             }
 
-            economy[player] = economy.getLong(player) - args.get(amount)
+            EconomyHandler[player] -= args.get(amount).toLong()
 
             sender.sendFormattedTranslatableMessage(
                 "economy", "remove",
@@ -77,7 +79,7 @@ object EcoCommand : Command("eco") {
                 return@addSyntax
             }
 
-            economy[player] = economy.getLong(player) + args.get(amount)
+            EconomyHandler[player] += args.get(amount).toLong()
 
             sender.sendFormattedTranslatableMessage(
                 "economy", "add",
