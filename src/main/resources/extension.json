@@ -1,5 +1,8 @@
 {
   "entrypoint": "world.cepi.economy.EconomyExtension",
-  "name": "ExampleExtension",
-  "version": "1.0.0-EXAMPLE"
+  "name": "EconomyExtension",
+  "version": "1.0.0",
+  "meta": {
+    "downloadURL": "https://github.com/Project-Cepi/EconomyExtension/releases/download/latest/economy-all.jar"
+  }
 }
