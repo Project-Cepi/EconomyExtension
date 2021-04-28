@@ -41,7 +41,7 @@ internal object EconomyCommand : Command("eco") {
             )
         }
 
-        addSyntax(set, playerArgument, amount) { sender, args ->
+        addSyntax(set, amount, playerArgument) { sender, args ->
 
             val player = args.get(playerArgument).find(sender)[0] as? Player
 
@@ -59,7 +59,7 @@ internal object EconomyCommand : Command("eco") {
             )
         }
 
-        addSyntax(remove, playerArgument, amount) { sender, args ->
+        addSyntax(remove, amount, playerArgument) { sender, args ->
 
             val player = args.get(playerArgument).find(sender)[0] as? Player
 
@@ -77,7 +77,7 @@ internal object EconomyCommand : Command("eco") {
             )
         }
 
-        addSyntax(add, playerArgument, amount) { sender, args ->
+        addSyntax(add, amount, playerArgument) { sender, args ->
 
             val player = args.get(playerArgument).find(sender)[0] as? Player
             
