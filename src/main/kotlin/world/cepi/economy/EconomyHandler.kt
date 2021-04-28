@@ -10,7 +10,7 @@ object EconomyHandler {
     private val economy: Object2LongMap<UUID> = Object2LongOpenHashMap()
 
     operator fun set(player: Player, amount: Long) {
-        economy[player.uuid] = amount
+        economy[player.uuid] = amount.coerceAtLeast(0)
     }
 
     operator fun get(player: Player): Long {

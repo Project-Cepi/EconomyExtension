@@ -6,6 +6,7 @@ import net.minestom.server.MinecraftServer
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
+import net.minestom.server.utils.entity.EntityFinder
 import world.cepi.economy.EconomyHandler
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kepi.subcommands.Help
@@ -22,7 +23,13 @@ internal object EconomyCommand : Command("eco") {
         val remove = "remove".asSubcommand()
 
         val amount = ArgumentType.Integer("amount")
-        val playerArgument = ArgumentType.Entity("player").onlyPlayers(true).singleEntity(true)
+
+        val playerArgument = ArgumentType.Entity("player")
+            .onlyPlayers(true)
+            .singleEntity(true)
+            .setDefaultValue {
+                EntityFinder().setTargetSelector(EntityFinder.TargetSelector.SELF)
+            }
 
         addSyntax(info, playerArgument) { sender, args ->
             sender.sendFormattedTranslatableMessage("economy", "amount",
