@@ -11,16 +11,16 @@ import world.cepi.economy.EconomyHandler
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
 import world.cepi.kepi.subcommands.Help
 import world.cepi.kstom.command.addSyntax
-import world.cepi.kstom.command.arguments.asSubcommand
+import world.cepi.kstom.command.arguments.literal
 
 internal object EconomyCommand : Command("eco") {
 
     init {
 
-        val info = "info".asSubcommand()
-        val set = "set".asSubcommand()
-        val add = "add".asSubcommand()
-        val remove = "remove".asSubcommand()
+        val info = "info".literal()
+        val set = "set".literal()
+        val add = "add".literal()
+        val remove = "remove".literal()
 
         val amount = ArgumentType.Integer("amount")
 
