@@ -16,12 +16,9 @@ repositories {
     // Use mavenCentral
     mavenCentral()
 
-    maven(url = "https://repo1.maven.org/maven2/")
-    maven(url = "https://repo.spongepowered.org/maven")
-    maven(url = "https://libraries.minecraft.net")
     maven(url = "https://jitpack.io")
-    maven(url = "https://jcenter.bintray.com/")
-    maven(url = "https://oss.sonatype.org/content/repositories/snapshots/")
+    maven(url = "https://repo.spongepowered.org/maven")
+    maven(url = "https://repo.minestom.com/repository/maven-public/")
     maven(url = "https://repo.velocitypowered.com/snapshots/")
 }
 
@@ -36,7 +33,7 @@ dependencies {
     compileOnly(kotlin("reflect"))
 
     // Compile Minestom into project
-    compileOnly("com.github.Project-Cepi:Minestom:5ddda986a7")
+    compileOnly("com.github.Project-Cepi:Minestom:73abe7a4d7")
 
     // Get KStom
     compileOnly("com.github.Project-Cepi:KStom:ea3624d804")
@@ -45,7 +42,7 @@ dependencies {
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1")
 
     // Add Kepi
-    compileOnly("com.github.Project-Cepi:Kepi:3371e1a411")
+    compileOnly("com.github.Project-Cepi:Kepi:2045d0a53d")
 }
 
 tasks.withType<Test> {
