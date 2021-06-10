@@ -8,8 +8,8 @@ import net.minestom.server.command.builder.arguments.ArgumentType
 import net.minestom.server.entity.Player
 import net.minestom.server.utils.entity.EntityFinder
 import world.cepi.economy.EconomyHandler
+import world.cepi.kepi.command.subcommand.applyHelp
 import world.cepi.kepi.messages.sendFormattedTranslatableMessage
-import world.cepi.kepi.subcommands.applyHelp
 import world.cepi.kstom.command.addSyntax
 import world.cepi.kstom.command.arguments.literal
 
@@ -95,7 +95,7 @@ internal object EconomyCommand : Command("eco") {
             )
         }
 
-        applyHelp(
+        applyHelp {
             """
                 The economy command is a supertool
                 to manage the money of users.
@@ -109,7 +109,7 @@ internal object EconomyCommand : Command("eco") {
                 Example: <yellow>eco info User
                 The example will return the amount of money they have.
             """.trimIndent()
-        )
+        }
 
     }
 }
