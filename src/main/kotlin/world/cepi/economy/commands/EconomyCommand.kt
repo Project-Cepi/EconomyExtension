@@ -31,66 +31,66 @@ internal object EconomyCommand : Command("eco") {
                 EntityFinder().setTargetSelector(EntityFinder.TargetSelector.SELF)
             }
 
-        addSyntax(info, playerArgument) { sender, args ->
+        addSyntax(info, playerArgument) {
             sender.sendFormattedTranslatableMessage("economy", "amount",
                 Component.text(EconomyHandler[
                         MinecraftServer
                             .getConnectionManager()
-                            .getPlayer(args.get(playerArgument).find(sender)[0].uuid)!!
+                            .getPlayer(context.get(playerArgument).find(sender)[0].uuid)!!
                                              ], NamedTextColor.BLUE)
             )
         }
 
-        addSyntax(set, amount, playerArgument) { sender, args ->
+        addSyntax(set, amount, playerArgument) {
 
-            val player = args.get(playerArgument).find(sender)[0] as? Player
+            val player = context.get(playerArgument).find(sender)[0] as? Player
 
             if (player == null) {
                 sender.sendFormattedTranslatableMessage("common", "target.not_found")
                 return@addSyntax
             }
 
-            EconomyHandler[player] = args.get(amount).toLong()
+            EconomyHandler[player] = context.get(amount).toLong()
 
             sender.sendFormattedTranslatableMessage(
                 "economy", "set",
-                Component.text(args.get(amount), NamedTextColor.BLUE),
+                Component.text(context.get(amount), NamedTextColor.BLUE),
                 Component.text(player.username, NamedTextColor.BLUE)
             )
         }
 
-        addSyntax(remove, amount, playerArgument) { sender, args ->
+        addSyntax(remove, amount, playerArgument) {
 
-            val player = args.get(playerArgument).find(sender)[0] as? Player
+            val player = context.get(playerArgument).find(sender)[0] as? Player
 
             if (player == null) {
                 sender.sendFormattedTranslatableMessage("common", "target.not_found")
                 return@addSyntax
             }
 
-            EconomyHandler[player] -= args.get(amount).toLong()
+            EconomyHandler[player] -= context.get(amount).toLong()
 
             sender.sendFormattedTranslatableMessage(
                 "economy", "remove",
-                Component.text(args.get(amount), NamedTextColor.BLUE),
+                Component.text(context.get(amount), NamedTextColor.BLUE),
                 Component.text(player.username, NamedTextColor.BLUE)
             )
         }
 
-        addSyntax(add, amount, playerArgument) { sender, args ->
+        addSyntax(add, amount, playerArgument) {
 
-            val player = args.get(playerArgument).find(sender)[0] as? Player
+            val player = context.get(playerArgument).find(sender)[0] as? Player
             
             if (player == null) {
                 sender.sendFormattedTranslatableMessage("common", "target.not_found")
                 return@addSyntax
             }
 
-            EconomyHandler[player] += args.get(amount).toLong()
+            EconomyHandler[player] += context.get(amount).toLong()
 
             sender.sendFormattedTranslatableMessage(
                 "economy", "add",
-                Component.text(args.get(amount), NamedTextColor.BLUE),
+                Component.text(context.get(amount), NamedTextColor.BLUE),
                 Component.text(player.username, NamedTextColor.BLUE)
             )
         }
