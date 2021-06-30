@@ -4,5 +4,8 @@
   "version": "1.0.0",
   "meta": {
     "downloadURL": "https://github.com/Project-Cepi/EconomyExtension/releases/download/latest/economy-all.jar"
-  }
+  },
+  "dependencies": [
+    "KStom"
+  ]
 }
