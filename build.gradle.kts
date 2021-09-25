@@ -36,13 +36,13 @@ dependencies {
     compileOnly("com.github.Minestom:Minestom:d7a6891153")
 
     // Get KStom
-    compileOnly("com.github.Project-Cepi:KStom:62ddba2b59")
+    compileOnly("com.github.Project-Cepi:KStom:e3ddf8f437")
 
     // import kotlinx serialization
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
 
     // Add Kepi
-    compileOnly("com.github.Project-Cepi:Kepi:9ed8b195ea")
+    compileOnly("com.github.Project-Cepi:Kepi:991a24276e")
 }
 
 tasks.withType<Test> {
