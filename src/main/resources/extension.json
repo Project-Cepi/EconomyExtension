@@ -6,6 +6,7 @@
     "downloadURL": "https://github.com/Project-Cepi/EconomyExtension/releases/download/latest/economy-1.0.0-all.jar"
   },
   "dependencies": [
-    "KStom"
+    "KStom",
+    "Kepi"
   ]
 }
