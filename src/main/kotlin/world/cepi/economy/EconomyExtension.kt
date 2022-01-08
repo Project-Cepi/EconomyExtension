@@ -4,17 +4,20 @@ import net.minestom.server.extensions.Extension
 import world.cepi.economy.commands.EconomyCommand
 import world.cepi.kstom.command.register
 import world.cepi.kstom.command.unregister
+import world.cepi.kstom.util.log
 
 class EconomyExtension : Extension() {
 
-    override fun initialize() {
+    override fun initialize(): LoadStatus {
         EconomyCommand.register()
-        logger.info("[EconomyExtension] has been enabled!")
+        log.info("[EconomyExtension] has been enabled!")
+
+        return LoadStatus.SUCCESS
     }
 
     override fun terminate() {
         EconomyCommand.unregister()
-        logger.info("[EconomyExtension] has been disabled!")
+        log.info("[EconomyExtension] has been disabled!")
     }
 
 }
